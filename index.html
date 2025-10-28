@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="Image-Depth Place Recognition Using Omnidirectional Cameras and Monocular Depth Estimation">
+  <meta property="og:title" content="Image-Depth Place Recognition Using Omnidirectional Cameras and Monocular Depth Estimation"/>
+  <meta property="og:description" content="This paper presents CrossPlace, an innovative method for cross-modal place recognition between omnidirectional cameras and LiDAR that transforms both data types into a common space of intensity, depth and semantics, enabling the use of a single network architecture for both modalities. The method includes data transformation and preprocessing with vertical interpolation and inpainting techniques, late fusion via descriptor concatenation, and achieves state-of-the-art performance on KITTI-360 dataset."/>
+  <meta property="og:url" content="https://MarcosAlfaro.github.io/projects-ImageDepthPR/"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/images/CrossPlace.png" />
+  <meta property="og:image:width" content="2766"/>
+  <meta property="og:image:height" content="770"/>
+
+
+  <!-- <meta name="twitter:title" content="VXP: Voxel-Cross-Pixel Large-scale Image-LiDAR Place Recognition">
+  <meta name="twitter:description" content="We propose a novel Voxel-Cross-Pixel (VXP) approach, which establishes voxel and pixel correspondences in a self-supervised manner and brings them into a shared feature space. We achieve state-of-the-art performance in cross-modal retrieval on the Oxford RobotCar, ViViD++ datasets and KITTI benchmark, while maintaining high uni-modal global localization accuracy."> -->
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <!-- <meta name="twitter:image" content="static/images/teaser_figure_w_traj.jpg">
+  <meta name="twitter:card" content="summary_large_image"> -->
+  <!-- Keywords for your paper to be indexed by-->
+ <meta name="keywords" content="place recognition, panoramic images, monocular depth estimation, data fusion">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>Image-Depth Place Recognition Using Omnidirectional Cameras and Monocular Depth Estimation</title>
+  <!-- <link rel="icon" type="image/x-icon" href="static/images/favicon.ico"> -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Image-Depth Place Recognition Using Omnidirectional Cameras and Monocular Depth Estimation</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://arvc.umh.es/personal/malfaro/index.php?type=per&dest=publi&lang=es&vista=normal&idp=malfaro" target="_blank">Marcos Alfaro</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://arvc.umh.es/personal/jcabrera/index.php?type=per&dest=publi&lang=en&vista=normal&idp=jcabrera" target=_blank>Juan José Cabrera</a><sup>1</sup>,</span>
+                  <span class="author-block">
+                  <a href="https://arvc.umh.es/personal/arturo/index.php?type=per&dest=inicio&lang=en&vista=normal&idp=arturo&ficha=on" target=_blank>Arturo Gil</a><sup>1</sup>,</span>
+                  <span class="author-block">
+                  <a href="https://arvc.umh.es/personal/oscar/index.php?type=per&dest=inicio&lang=es&vista=normal&idp=oscar&ficha=on" target=_blank>Oscar Reinoso</a><sup>1,2</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://arvc.umh.es/personal/lpaya/index.php?type=per&dest=inicio&lang=en&vista=normal&idp=lpaya&ficha=on" target="_blank">Luis Payá</a><sup>1,2</sup>
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup>1</sup>Institute for Engineering Research (I3E) </span> <br>
+                    <span class="author-block"><sup>2</sup>Valencian Graduate School and Research Network for Artificial Intelligence (valgrAI) </span> <br>
+
+                    <!-- <span class="author-block">Technical University of Munich<br>arXiv 2024</span> -->
+                    <!-- <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
+                  </div>
+                  <!-- <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup>2</sup>Munich Center for Machine Learning</span>
+                  </div>
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup>3</sup>Microsoft</span>
+                  </div> -->
+                  
+                  <!-- <div class="is-size-5 publication-authors">
+                    <span class="author-block">3DV 2025</span>
+                  </div> -->
+                  
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                         <div class="item">
+                          <!-- Your image here -->
+                          <!-- <img src="static/images/3dv2025_banner.png" alt="3DV2025" class="center" width="50%"/> -->
+                         </div>
+                      <!-- <span class="link-block">
+                        <a href="https://arxiv.org/pdf/2403.14594.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span> -->
+
+                    <!-- Supplementary PDF link -->
+                    <!-- <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark" disabled="">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary (Coming Soon)</span>
+                    </a>
+                  </span> -->
+                  
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/MarcosAlfaro/DepthCosPlace" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <!-- <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2403.07593" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser video-->
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+  <div class="hero-body">
+  <div class="grid-container">
+    <div class="grid-item">
+      <video poster="" id="tree" autoplay controls muted loop>
+        <source src="static/compressed/2015-02-13-09-16-26.mp4"
+        type="video/mp4">
+        </video>
+    </div>
+    <div class="grid-item">
+      <video poster="" id="tree" autoplay controls muted loop>
+        <source src="static/compressed/business_run3.mp4"
+        type="video/mp4">
+      </video>
+    </div>
+    <div class="grid-item">
+      <video poster="" id="tree" autoplay controls muted loop>
+        <source src="static/compressed/residential_run3.mp4"
+        type="video/mp4">
+      </video>
+    </div>  
+    <div class="grid-item">
+      <video poster="" id="tree" autoplay controls muted loop>
+        <source src="static/compressed/university_run3.mp4"
+        type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+</div>
+</section> -->
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+        <img src="static/images/CrossPlace.png" alt="MY ALT TEXT"/>
+        
+      <h2 class="subtitle has-text-centered">
+        General architecture of the CrossPlace method. The LiDAR point cloud is converted to an image through a spherical projection. Depending on the information projected to each image pixel, (a) the intensity image, (b) the range image and (c) the segmented range image by MinkUNet34C [1] are obtained. Likewise, fisheye images are transformed to an equirectangular image. This image is used to compute (d) the intensity image through grayscale conversion, (e) the depth image estimated by Depth Anything V2 Large [2] and (f) the semantic image obtained through SegFormer [3] are computed. Each type of image is embedded by an independent fine-tuned CosPlace model [4] with shared weights between sensor modalities. The CrossPlace final embedding is the result of the concatenation of the intensity, depth and semantic embeddings.
+    </div>
+  </div>
+</section>
+
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/0_from_video.gif" alt="MY ALT TEXT" style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
+      <h2 class="subtitle has-text-centered">
+        We propose a novel Data Augmentation technique, Distilled Depth Variations, which selectively estimates depth using different distilled versions of Depth Anything v2 (small, base, large) [3] and Distill Any Depth (small, base, large) [1]. This method introduces depth distortions based on the predictions of less robust models (e.g., the small and base variants). By simulating the inaccuracies of weaker depth estimators, this approach enhances the model's resilience to depth estimation errors inherent in pseudo-LiDAR generation pipelines.
+      </h2>
+    </div>
+  </div> -->
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            This paper presents CrossPlace, an innovative method for cross-modal place recognition between heterogeneous sensor modalities, particularly between fisheye cameras and LiDAR. Place recognition is the fundamental capability of mobile robots to determine their most likely location within a database, based on sensory input queries. In cross-modal place recognition, the goal is to localize using a different sensor from the one originally used to construct the database. The core contribution of this paper is a unified feature space that integrates intensity, depth and semantic information. Both the database entries and the queries are obtained by embedding sensor readings through the same CrossPlace model, ensuring a consistent representation across modalities. Consequently, a database constructed from LiDAR can be queried with fisheye images, and vice versa, using a single shared architecture. Furthermore, a comprehensive data transformation and preprocessing pipeline is presented. Specifically, CrossPlace is constituted by three independently branches, each one for processing intensity, depth and semantic information. Each branch consists of a CosPlace model for image embedding with shared weights across sensor modalities. Late fusion through concatenation of the intensity, depth and semantic embbedings provides optimal global performance. We conduct an exhaustive evaluation on the KITTI-360 dataset, where CrossPlace surpasses state-of-the-art techniques across all metrics, establishing a new standard for cross-modal place recognition in urban and highway environments. The results demonstrate the effectiveness of our unified approach for place recognition across different sensor modalities while maintaining a robust performance under various operating environments.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<!-- Image carousel -->
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+       <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/CPL_urban_00_2D3D_acierto.jpeg" alt="urban_2d3d_success" class="center" width="60%"/>
+        <h2 class="subtitle has-text-centered">
+          Successful retrieval example in 2D-3D modality in urban environment 00 with CrossPlace method for place recognition between fisheye images and LiDAR.
+        </h2>
+      </div>
+      <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/CPL_urban_18_3D2D_ligero_error.jpeg" alt="urban_3d2d_slight_error" class="center" width="60%"/>
+        <h2 class="subtitle has-text-centered">
+          Slight error example in 3D-2D modality in urban environment 18 with CrossPlace method for place recognition between fisheye images and LiDAR.
+        </h2>
+      </div>
+      <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/CPL_urban_18_2D3D_acierto.jpeg" alt="urban_2d3d_success_18" class="center" width="60%"/>
+        <h2 class="subtitle has-text-centered">
+          Successful retrieval example in 2D-3D modality in urban environment 18 with CrossPlace method for place recognition between fisheye images and LiDAR.
+       </h2>
+     </div>
+     <div class="item">
+      <!-- Your image here -->
+      <img src="static/images/CPL_highway_2D3D_07_acierto.jpeg" alt="highway_2d3d_success" class="center" width="60%"/>
+      <h2 class="subtitle has-text-centered">
+        Successful retrieval example in 2D-3D modality in highway environment 07 with CrossPlace method for place recognition between fisheye images and LiDAR.
+      </h2>
+    </div>
+    <div class="item">
+      <!-- Your image here -->
+      <img src="static/images/CPL_highway_3D2D_03_error.jpeg" alt="highway_3d2d_error" class="center" width="60%"/>
+      <h2 class="subtitle has-text-centered">
+        Failed retrieval example in 3D-2D modality in highway environment 03 with CrossPlace method for place recognition between fisheye images and LiDAR.
+      </h2>
+    </div>
+    <div class="item">
+      <!-- Your image here -->
+      <img src="static/images/CPL_highway_3D2D_07_acierto.jpeg" alt="highway_3d2d_success" class="center" width="60%"/>
+      <h2 class="subtitle has-text-centered">
+        Successful retrieval example in 3D-2D modality in highway environment 07 with CrossPlace method for place recognition between fisheye images and LiDAR.
+      </h2>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+<!-- End image carousel -->
+
+
+
+
+<!-- Youtube video -->
+<!-- <section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Video Presentation</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- End youtube video -->
+
+
+<!-- Video carousel -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3">CrossPlace Evaluation Results</h2>
+      <h2 class="subtitle">
+        Highway Environment - Sequence 03
+      </h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <h2 class="subtitle has-text-centered is-size-4">
+            2D-3D Modality
+          </h2>
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/compressed/evaluation_highway_query2D_database3D_2013_05_28_drive_0003_sync.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column">
+          <h2 class="subtitle has-text-centered is-size-4">
+            3D-2D Modality
+          </h2>
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/compressed/evaluation_highway_query3D_database2D_2013_05_28_drive_0003_sync.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3">CrossPlace Evaluation Results</h2>
+      <h2 class="subtitle">
+        Urban Environment - Sequence 00
+      </h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <h2 class="subtitle has-text-centered is-size-4">
+            2D-3D Modality
+          </h2>
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/compressed/evaluation_urban_query2D_database3D_2013_05_28_drive_0000_sync.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column">
+          <h2 class="subtitle has-text-centered is-size-4">
+            3D-2D Modality
+          </h2>
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/compressed/evaluation_urban_query3D_database2D_2013_05_28_drive_0000_sync.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3">CrossPlace Further Test Results</h2>
+      <h2 class="subtitle">
+        Highway Environment - Sequence 07
+      </h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <h2 class="subtitle has-text-centered is-size-4">
+            2D-3D Modality
+          </h2>
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/compressed/further_test_highway_query2D_database3D_2013_05_28_drive_0007_sync.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column">
+          <h2 class="subtitle has-text-centered is-size-4">
+            3D-2D Modality
+          </h2>
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/compressed/further_test_highway_query3D_database2D_2013_05_28_drive_0007_sync.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3">CrossPlace Further Test Results</h2>
+      <h2 class="subtitle">
+        Urban Environment - Sequence 18
+      </h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <h2 class="subtitle has-text-centered is-size-4">
+            2D-3D Modality
+          </h2>
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/compressed/further_test_urban_query2D_database3D_2013_05_28_drive_0018_sync.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column">
+          <h2 class="subtitle has-text-centered is-size-4">
+            3D-2D Modality
+          </h2>
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/compressed/further_test_urban_query3D_database2D_2013_05_28_drive_0018_sync.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Añade una sección para cargar dos imágenes, una en una fila y otra después -->
+
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3">Comparison with other methods</h2>
+      <div class="item">
+        <img src="static/images/table.png" alt="new_image_1" class="center" width="150%"/>
+        <h2 class="subtitle has-text-centered">
+          Comparison in terms of Recall@1 (R@1) and Recall@1% (R@1%) with state-of-the-art methods.
+        </h2>
+      </div>
+    
+      <div class="content" style="margin-top: 2rem;"></div>
+        <p style="text-align: justify;">
+          <strong>Bibliography:</strong><br>
+          [1] Uy, M. A., Pham, Q. H., Hua, B.-S., Nguyen, T., & Yeung, S.-K. (2018). PointNetVLAD: Deep point cloud based retrieval for large-scale place recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (pp. 4470-4479).<br>
+          [2] Zhang, J., Hua, B.-S., & Yeung, S.-K. (2019). PCAN: 3D Attention Map Learning Using Contextual Information for Point Cloud Based Retrieval. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (pp. 12436-12445).<br>
+          [3] Sun, Y., & Chen, X. (2020). DAGC: Data-Augmentation and Graph Convolution Network for 3D Point Cloud Classification. IEEE Transactions on Multimedia, 22(9), 2237-2249.<br>
+          [4] Liu, Z., Tang, H., Lin, Y., & Han, S. (2019). LPD-Net: 3D Point Cloud Learning for Large-Scale Place Recognition and Environment Analysis. In Proceedings of the IEEE International Conference on Computer Vision (pp. 12308-12317).<br>
+          [5] Xia, Y., Chen, X., & Zhang, H. (2021). SOE-Net: A Self-Attention and Orientation Encoding Network for Point Cloud based Place Recognition. IEEE Transactions on Multimedia, 23, 2751-2763.<br>
+          [6] Komorowski, J. (2021). MinkLoc3D: Point Cloud Based Large-Scale Place Recognition. In Proceedings of the IEEE International Conference on 3D Vision (pp. 1080-1088).<br>
+          [7] Hui, L., Yi, L., Wu, Z., Qi, C. R., & Guibas, L. J. (2021). PPT-Net: Point Pair Transformation Network for Efficient Point Cloud Registration. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (pp. 1578-1587).<br>
+          [8] Fan, L., Pang, J., Yang, Y., & Tian, Y. (2022). SVT-Net: Supervised Volumetric Transformer Network for Place Recognition Using 3D Point Clouds. IEEE Transactions on Neural Networks and Learning Systems.<br>
+          [9] Xu, H., Zhang, J., & Yeung, S.-K. (2021). TransLoc3D: A Transformer Network for Place Recognition using 3D Point Clouds. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (pp. 3677-3686).<br>
+          [10] Komorowski, J. (2022). Improving Large-Scale Place Recognition Using MinkLoc3D and Sparse Voxelization. IEEE Transactions on Image Processing, 31, 3054-3068.<br>
+        </p>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- End video carousel -->
+
+
+
+
+<!-- Paper poster -->
+<!-- <section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title">Poster</h2>
+
+      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
+          </iframe>
+        
+      </div>
+    </div>
+  </section> -->
+<!--End paper poster -->
+
+
+<!--BibTex citation -->
+  <!-- <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@misc{cabrera2024minkunext,
+        title={MinkUNeXt: Point Cloud-based Large-scale Place Recognition using 3D Sparse Convolutions},
+        author={J. J. Cabrera and A. Santo and A. Gil and C. Viegas and L. Payá},
+        year={2024},
+        eprint={2403.07593},
+        archivePrefix={arXiv},
+        primaryClass={cs.CV}
+      }</code></pre>
+    </div>
+</section> -->
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
