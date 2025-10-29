@@ -9,7 +9,7 @@
   <meta property="og:description" content="This paper presents CrossPlace, an innovative method for cross-modal place recognition between omnidirectional cameras and LiDAR that transforms both data types into a common space of intensity, depth and semantics, enabling the use of a single network architecture for both modalities. The method includes data transformation and preprocessing with vertical interpolation and inpainting techniques, late fusion via descriptor concatenation, and achieves state-of-the-art performance on KITTI-360 dataset."/>
   <meta property="og:url" content="https://MarcosAlfaro.github.io/projects-ImageDepthPR/"/>
   <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/images/CrossPlace.png" />
+  <meta property="og:image" content="static/images/Fig1.PNG" />
   <meta property="og:image:width" content="2766"/>
   <meta property="og:image:height" content="770"/>
 
@@ -181,10 +181,10 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-        <img src="static/images/CrossPlace.png" alt="MY ALT TEXT"/>
+        <img src="static/images/Fig1.PNG" alt="MY ALT TEXT"/>
         
       <h2 class="subtitle has-text-centered">
-        General architecture of the CrossPlace method. The LiDAR point cloud is converted to an image through a spherical projection. Depending on the information projected to each image pixel, (a) the intensity image, (b) the range image and (c) the segmented range image by MinkUNet34C [1] are obtained. Likewise, fisheye images are transformed to an equirectangular image. This image is used to compute (d) the intensity image through grayscale conversion, (e) the depth image estimated by Depth Anything V2 Large [2] and (f) the semantic image obtained through SegFormer [3] are computed. Each type of image is embedded by an independent fine-tuned CosPlace model [4] with shared weights between sensor modalities. The CrossPlace final embedding is the result of the concatenation of the intensity, depth and semantic embeddings.
+        General outline of the proposed method. First, relative depth maps are obtained from panoramic images using Depth Anything v2 [11]. Second, both images and depth maps are transformed into embeddings through the same frozen VPR model. Third, visual and depth embeddings are merged into a global descriptor through late fusion.
     </div>
   </div>
 </section>
@@ -208,7 +208,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            This paper presents CrossPlace, an innovative method for cross-modal place recognition between heterogeneous sensor modalities, particularly between fisheye cameras and LiDAR. Place recognition is the fundamental capability of mobile robots to determine their most likely location within a database, based on sensory input queries. In cross-modal place recognition, the goal is to localize using a different sensor from the one originally used to construct the database. The core contribution of this paper is a unified feature space that integrates intensity, depth and semantic information. Both the database entries and the queries are obtained by embedding sensor readings through the same CrossPlace model, ensuring a consistent representation across modalities. Consequently, a database constructed from LiDAR can be queried with fisheye images, and vice versa, using a single shared architecture. Furthermore, a comprehensive data transformation and preprocessing pipeline is presented. Specifically, CrossPlace is constituted by three independently branches, each one for processing intensity, depth and semantic information. Each branch consists of a CosPlace model for image embedding with shared weights across sensor modalities. Late fusion through concatenation of the intensity, depth and semantic embbedings provides optimal global performance. We conduct an exhaustive evaluation on the KITTI-360 dataset, where CrossPlace surpasses state-of-the-art techniques across all metrics, establishing a new standard for cross-modal place recognition in urban and highway environments. The results demonstrate the effectiveness of our unified approach for place recognition across different sensor modalities while maintaining a robust performance under various operating environments.
+            Omnidirectional cameras are a suitable, cost-effective choice for Visual Place Recognition (VPR), as they provide comprehensive information from the scene regardless of the robot orientation. However, vision sensors are vulnerable to environmental appearance changes (e.g., illumination, season). While multi-modal approaches can overcome these challenges, they introduce significant cost and system complexity. This paper introduces a novel fusion framework that enhances VPR robustness by integrating visual data with geometric features derived from monocular depth estimation, retaining a single-camera setup. In the ablation study, both early and late fusion strategies are evaluated to optimally combine appearance-based and depth-derived descriptors. The extensive evaluation on challenging, indoor and outdoor datasets demonstrates that the proposed method consistently boosts retrieval performance across multiple state-of-the-art VPR backbones. Furthermore, this improvement is achieved without requiring end-to-end retraining, allowing our method to function as a pluggable module for pre-trained models. Consequently, this work presents a powerful, practical, and low-cost solution for robust VPR, with high potential to scale as monocular depth estimation and VPR models continue to improve.
           </p>
         </div>
       </div>
