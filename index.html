@@ -182,9 +182,8 @@
   <div class="container is-max-desktop">
     <div class="hero-body">
         <img src="static/images/Fig1.PNG" alt="MY ALT TEXT"/>
-        
       <h2 class="subtitle has-text-centered">
-        General outline of the proposed method. First, relative depth maps are obtained from panoramic images using Depth Anything v2 [11]. Second, both images and depth maps are transformed into embeddings through the same frozen VPR model. Third, visual and depth embeddings are merged into a global descriptor through late fusion.
+        General outline of the proposed method. First, relative depth maps are obtained from panoramic images using Depth Anything v2 [1]. Second, both images and depth maps are transformed into embeddings through the same frozen VPR model. Third, visual and depth embeddings are merged into a global descriptor through late fusion.
     </div>
   </div>
 </section>
@@ -216,6 +215,75 @@
   </div>
 </section>
 <!-- End paper abstract -->
+
+
+<!-- Image carousel -->
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Highlighted Examples</h2>
+      <h2 class="subtitle">
+        COLD database [2]
+      </h2>
+      <div id="results-carousel" class="carousel results-carousel">
+       <div class="item">
+        <img src="static/images/FR_A_Sunny.png" alt="fr_a_wrong" class="center" width="60%"/>
+        <h2 class="subtitle has-text-centered">
+          R@1% successful retrieval example in the FR-A environment under sunny conditions with our method.
+        </h2>
+      </div>
+      <div class="item">
+        <img src="static/images/FR_B_Sunny_correct.png" alt="fr_b_correct" class="center" width="60%"/>
+        <h2 class="subtitle has-text-centered">
+          R@1 successful retrieval example in the FR-B environment under sunny conditions with our method.
+        </h2>
+      </div>
+      <div class="item">
+        <img src="static/images/SA_A_Night_correct.png" alt="sa_a_correct" class="center" width="60%"/>
+        <h2 class="subtitle has-text-centered">
+          R@1 successful retrieval example in the SA-A environment under night conditions with our method.
+       </h2>
+     </div>
+     <div class="item">
+      <img src="static/images/SA_B_Night.png" alt="sa_b_wrong" class="center" width="60%"/>
+      <h2 class="subtitle has-text-centered">
+        Wrong retrieval example in the SA-B environment under night conditions with our method.
+      </h2>
+    </div>
+    <h2 class="subtitle">
+        360Loc database [3]
+      </h2>
+    <div class="item">
+        <img src="static/images/atrium_nighttime2_correct.png" alt="atrium_nighttime2_correct" class="center" width="60%"/>
+        <h2 class="subtitle has-text-centered">
+          R@1 successful retrieval example in the atrium environment under nighttime conditions with our method.
+        </h2>
+      </div>
+      <div class="item">
+        <img src="static/images/concourse_daytime2.png" alt="concourse_daytime2" class="center" width="60%"/>
+        <h2 class="subtitle has-text-centered">
+          Wrong retrieval example in the concourse environment under daytime conditions with our method.
+        </h2>
+      </div>
+      <div class="item">
+        <img src="static/images/hall_nighttime2_correct.png" alt="hall_nighttime2_correct" class="center" width="60%"/>
+        <h2 class="subtitle has-text-centered">
+          R@1 successful retrieval example in the hall environment under nighttime conditions with our method.
+       </h2>
+     </div>
+     <div class="item">
+      <img src="static/images/piatrium_nighttime0.png" alt="piatrium_nighttime0" class="center" width="60%"/>
+      <h2 class="subtitle has-text-centered">
+        Wrong retrieval example in the piatrium environment under nighttime conditions with our method.
+      </h2>
+    </div>
+  </div>
+</div>
+</section>
+<!-- End image carousel -->
+
+
+
 
 
 <!-- Image carousel -->
@@ -291,9 +359,9 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <h2 class="title is-3">Evaluation Results</h2>
+      <h2 class="title is-3">Trajectory Results</h2>
       <h2 class="subtitle">
-        COLD database 
+        COLD database [2]
       </h2>
       <div class="columns is-centered">
         <div class="column">
@@ -348,7 +416,7 @@
     <div class="hero-body">
       <h2 class="title is-3">Evaluation Results</h2>
       <h2 class="subtitle">
-        360Loc dataset
+        360Loc dataset [3]
       </h2>
       <div class="columns is-centered">
         <div class="column">
