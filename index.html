@@ -188,35 +188,6 @@
   </div>
 </section>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <div id="teaser-carousel" class="carousel results-carousel">
-        <div class="item">
-          <video poster="" autoplay controls muted loop style="width: 100%">
-            <source src="cold_depth_videos.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
-            COLD Database - Depth Map Preprocessing
-          </h2>
-        </div>
-        <div class="item">
-          <video poster="" autoplay controls muted loop style="width: 100%">
-            <source src="360loc_depth_videos.mp4" type="video/mp4">
-          </video>
-          <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
-            360Loc Database - Depth Map Preprocessing
-          </h2>
-        </div>
-      </div>
-      <h2 class="subtitle has-text-centered" style="margin-top: 1.5rem;">
-        We propose a novel fusion framework that enhances VPR robustness by integrating visual data with depth maps, which are preprocessed to adapt them as suitable inputs for VPR models.
-      </h2>
-    </div>
-  </div>
-</section>
-<!-- End teaser video -->
-
 <!-- Paper abstract -->
 <section class="section hero is-light">
   <div class="container is-max-desktop">
@@ -235,9 +206,48 @@
 <!-- End paper abstract -->
 
 
+<!-- Depth estimation and processing -->
+<section class="hero teaser">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Depth Estimation and Processing</h2>
+      <h2 class="subtitle">
+        COLD database [2]
+      </h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="cold_depth_videos.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
+            We propose a novel fusion framework that enhances VPR robustness by integrating visual data with depth maps, which are preprocessed to adapt them as suitable inputs for VPR models.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-
-
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="subtitle">
+        360Loc database [3]
+      </h2>
+      <div class="columns is-centered">
+        <div class="column">
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="360loc_depth_videos.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
+            Depth maps obtained by means of Depth Anything v2 [1], a state-of-the-art depth estimation model, and preprocessed through various techniques to ensure compatibility with the VPR model knowledge and to enhance the geometric information captured.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End depth estimation and processing -->
 
 
 <!-- Youtube video -->
