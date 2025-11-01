@@ -188,15 +188,33 @@
   </div>
 </section>
 
-<!-- <section class="hero teaser">
+<section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <img src="static/images/0_from_video.gif" alt="MY ALT TEXT" style="display: block; margin-left: auto; margin-right: auto; width: 80%;" />
-      <h2 class="subtitle has-text-centered">
-        We propose a novel Data Augmentation technique, Distilled Depth Variations, which selectively estimates depth using different distilled versions of Depth Anything v2 (small, base, large) [3] and Distill Any Depth (small, base, large) [1]. This method introduces depth distortions based on the predictions of less robust models (e.g., the small and base variants). By simulating the inaccuracies of weaker depth estimators, this approach enhances the model's resilience to depth estimation errors inherent in pseudo-LiDAR generation pipelines.
+      <div id="teaser-carousel" class="carousel results-carousel">
+        <div class="item">
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/videos/cold_depth_videos.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
+            COLD Database - Depth Map Preprocessing
+          </h2>
+        </div>
+        <div class="item">
+          <video poster="" autoplay controls muted loop style="width: 100%">
+            <source src="static/videos/360loc_depth_videos.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
+            360Loc Database - Depth Map Preprocessing
+          </h2>
+        </div>
+      </div>
+      <h2 class="subtitle has-text-centered" style="margin-top: 1.5rem;">
+        We propose a novel fusion framework that enhances VPR robustness by integrating visual data with depth maps, which are preprocessed to adapt them as suitable inputs for VPR models.
       </h2>
     </div>
-  </div> -->
+  </div>
+</section>
 <!-- End teaser video -->
 
 <!-- Paper abstract -->
@@ -366,8 +384,8 @@
 
 <!-- Video carousel -->
 <section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
+  <div class="hero-body">
+    <div class="container">
       <h2 class="title is-3">Trajectory Results</h2>
       <h2 class="subtitle">
         COLD database [2]
@@ -418,6 +436,7 @@
 
     </div>
   </div>
+</div>
 </section>
 
 <section class="hero is-light">
